@@ -1,0 +1,27 @@
+/* ChatXRoom.css */
+body {
+    font-family: 'Orbitron', sans-serif;
+  }
+  .chat-room-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full screen height */
+    padding-left: 80px; /* Align with sidebar/profile icon */
+  }
+  
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .chat-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: black;
+    border-top: 2px solid #3a3a3a;
+  }
+  

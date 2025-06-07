@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0; /* Ensure no default margin interferes */
+  padding: 0; /* Ensure no default padding interferes */
+}
+
+/* Global theme variables */
+:root {
+  --chat-primary: #8B5CF6;
+  --chat-secondary: #A855F7;
+  --chat-accent: #C084FC;
+  --chat-background: #0F0F23;
+  --chat-surface: #1A1A2E;
+  --chat-surfaceVariant: #16213E;
+  --chat-text: #FFFFFF;
+  --chat-textSecondary: #B8B8D1;
+  --chat-textMuted: #6B7280;
+  --chat-border: #8B5CF6;
+  --chat-borderMuted: #374151;
+  --chat-success: #10B981;
+  --chat-warning: #F59E0B;
+  --chat-error: #EF4444;
+  --chat-userMessage: #8B5CF6;
+  --chat-otherMessage: #374151;
+  --chat-inputBackground: #1F2937;
+  --chat-scrollbar: #8B5CF6;
+}
+
+/* Global body styling with theme support */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--chat-background);
+  color: var(--chat-text);
+}
+.neon-text {
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #a855f7,
+      0 0 20px #a855f7,
+      0 0 40px #a855f7,
+      0 0 80px #a855f7;
+  }
+  @keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+      opacity: 1;
+      text-shadow:
+        0 0 5px #ff00e0,
+        0 0 10px #ff00e0,
+        0 0 20px #ff00e0,
+        0 0 40px #ff00e0,
+        0 0 80px #ff00e0;
+    }
+    20%, 24%, 55% {
+      opacity: 0.3;
+      text-shadow: none;
+    }
+  }
+
+  @keyframes slowGlow {
+    0% {
+      text-shadow:
+        0 0 5px #ff00e0,
+        0 0 10px #ff00e0,
+        0 0 20px #ff00e0,
+        0 0 40px #ff00e0;
+      opacity: 1;
+    }
+    50% {
+      text-shadow:
+        0 0 2px #800080,
+        0 0 4px #800080,
+        0 0 8px #800080,
+        0 0 16px #800080;
+      opacity: 0.6;
+    }
+    100% {
+      text-shadow:
+        0 0 5px #ff00e0,
+        0 0 10px #ff00e0,
+        0 0 20px #ff00e0,
+        0 0 40px #ff00e0;
+      opacity: 1;
+    }
+  }
+
+  .zentro-glow {
+    font-family: 'Orbitron', sans-serif;
+    color: #ff00e0;
+    animation: slowGlow 4s ease-in-out infinite;
+  }
+  .neon-text {
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+  }
+
+  .neon-border {
+    border: 2px solid #0ff;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff inset;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+  }

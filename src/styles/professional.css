@@ -1,0 +1,367 @@
+/* Professional Zentro Chat Styling */
+
+/* Global Professional Enhancements */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Professional Gradients */
+.zentro-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.zentro-gradient-secondary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.zentro-gradient-success {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.zentro-gradient-dark {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.zentro-gradient-neon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+/* Professional Shadows */
+.zentro-shadow-sm {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.zentro-shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.zentro-shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.zentro-shadow-xl {
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+.zentro-shadow-neon {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.zentro-shadow-purple {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Professional Animations */
+@keyframes zentro-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zentro-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zentro-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zentro-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes zentro-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+  }
+}
+
+/* Animation Classes */
+.zentro-animate-fade-in {
+  animation: zentro-fade-in 0.3s ease-out;
+}
+
+.zentro-animate-slide-in {
+  animation: zentro-slide-in 0.3s ease-out;
+}
+
+.zentro-animate-scale-in {
+  animation: zentro-scale-in 0.2s ease-out;
+}
+
+.zentro-animate-pulse {
+  animation: zentro-pulse 2s infinite;
+}
+
+.zentro-animate-glow {
+  animation: zentro-glow 2s infinite;
+}
+
+/* Professional Buttons */
+.zentro-btn {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.zentro-btn-primary {
+  @apply bg-purple-600 hover:bg-purple-700 text-white focus:ring-purple-500;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+}
+
+.zentro-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.zentro-btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500;
+}
+
+.zentro-btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white focus:ring-green-500;
+}
+
+.zentro-btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white focus:ring-red-500;
+}
+
+.zentro-btn-outline {
+  @apply border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white focus:ring-purple-500;
+}
+
+/* Professional Cards */
+.zentro-card {
+  @apply bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.zentro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.zentro-card-neon {
+  @apply bg-gray-900 border-purple-500/30 rounded-xl transition-all duration-300;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+}
+
+.zentro-card-neon:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+}
+
+/* Professional Inputs */
+.zentro-input {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300;
+}
+
+.zentro-input:focus {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* Professional Typography */
+.zentro-heading-1 {
+  @apply text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent;
+}
+
+.zentro-heading-2 {
+  @apply text-3xl font-bold text-gray-900 dark:text-white;
+}
+
+.zentro-heading-3 {
+  @apply text-2xl font-semibold text-gray-900 dark:text-white;
+}
+
+.zentro-text-primary {
+  @apply text-purple-600 dark:text-purple-400;
+}
+
+.zentro-text-secondary {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.zentro-text-muted {
+  @apply text-gray-500 dark:text-gray-500;
+}
+
+/* Professional Layouts */
+.zentro-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.zentro-section {
+  @apply py-16;
+}
+
+.zentro-grid {
+  @apply grid gap-6;
+}
+
+.zentro-grid-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.zentro-grid-3 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.zentro-grid-4 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+/* Professional Modals */
+.zentro-modal-overlay {
+  @apply fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4;
+  animation: zentro-fade-in 0.3s ease-out;
+}
+
+.zentro-modal {
+  @apply bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700;
+  animation: zentro-scale-in 0.3s ease-out;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.zentro-modal-header {
+  @apply flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700;
+}
+
+.zentro-modal-content {
+  @apply p-6 overflow-y-auto;
+}
+
+.zentro-modal-footer {
+  @apply flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
+}
+
+/* Professional Navigation */
+.zentro-nav {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700;
+}
+
+.zentro-nav-item {
+  @apply px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300;
+}
+
+.zentro-nav-item.active {
+  @apply text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30;
+}
+
+/* Professional Badges */
+.zentro-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.zentro-badge-primary {
+  @apply bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300;
+}
+
+.zentro-badge-success {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
+}
+
+.zentro-badge-warning {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300;
+}
+
+.zentro-badge-danger {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300;
+}
+
+/* Professional Loading States */
+.zentro-loading {
+  @apply animate-pulse;
+}
+
+.zentro-skeleton {
+  @apply bg-gray-200 dark:bg-gray-700 rounded;
+}
+
+/* Professional Scrollbars */
+.zentro-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.zentro-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.zentro-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+.zentro-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Professional Responsive Design */
+@media (max-width: 768px) {
+  .zentro-mobile-hidden {
+    display: none;
+  }
+  
+  .zentro-mobile-full {
+    width: 100%;
+  }
+  
+  .zentro-mobile-stack {
+    flex-direction: column;
+  }
+}
+
+/* Professional Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .zentro-auto-dark {
+    @apply bg-gray-900 text-white;
+  }
+}
+
+/* Professional Focus States */
+.zentro-focus:focus {
+  @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* Professional Transitions */
+.zentro-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.zentro-transition-fast {
+  @apply transition-all duration-150 ease-in-out;
+}
+
+.zentro-transition-slow {
+  @apply transition-all duration-500 ease-in-out;
+}

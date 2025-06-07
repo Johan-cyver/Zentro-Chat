@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ollama Connection Test</h1>
+        
+        <div>
+            <h2>1. Check if Ollama Server is Running</h2>
+            <button id="checkServer">Check Ollama Server</button>
+            <div id="serverStatus" class="status"></div>
+        </div>
+        
+        <div>
+            <h2>2. List Available Models</h2>
+            <button id="listModels">List Models</button>
+            <div id="modelsList" class="status"></div>
+        </div>
+        
+        <div>
+            <h2>3. Test Text Generation</h2>
+            <p>Model: <input type="text" id="modelName" value="tinyllama"></p>
+            <p>Prompt: <input type="text" id="prompt" value="Tell me about artificial intelligence in one paragraph." style="width: 400px;"></p>
+            <button id="generateText">Generate Text</button>
+            <div id="generationStatus" class="status"></div>
+            <pre id="generatedText"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('checkServer').addEventListener('click', async () => {
+            const serverStatus = document.getElementById('serverStatus');
+            serverStatus.innerHTML = 'Checking Ollama server...';
+            serverStatus.className = 'status';
+            
+            try {
+                const response = await fetch('http://localhost:11435/api/tags');
+                
+                if (response.ok) {
+                    serverStatus.innerHTML = '✅ Ollama server is running!';
+                    serverStatus.className = 'status success';
+                } else {
+                    serverStatus.innerHTML = `❌ Error: Server returned status ${response.status}`;
+                    serverStatus.className = 'status error';
+                }
+            } catch (error) {
+                serverStatus.innerHTML = `❌ Error: ${error.message}`;
+                serverStatus.className = 'status error';
+            }
+        });
+        
+        document.getElementById('listModels').addEventListener('click', async () => {
+            const modelsList = document.getElementById('modelsList');
+            modelsList.innerHTML = 'Fetching models...';
+            modelsList.className = 'status';
+            
+            try {
+                const response = await fetch('http://localhost:11435/api/tags');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const models = data.models || [];
+                    
+                    if (models.length > 0) {
+                        modelsList.innerHTML = '✅ Available models:<br>' + models.join('<br>');
+                        modelsList.className = 'status success';
+                    } else {
+                        modelsList.innerHTML = '⚠️ No models found';
+                        modelsList.className = 'status error';
+                    }
+                } else {
+                    modelsList.innerHTML = `❌ Error: Server returned status ${response.status}`;
+                    modelsList.className = 'status error';
+                }
+            } catch (error) {
+                modelsList.innerHTML = `❌ Error: ${error.message}`;
+                modelsList.className = 'status error';
+            }
+        });
+        
+        document.getElementById('generateText').addEventListener('click', async () => {
+            const generationStatus = document.getElementById('generationStatus');
+            const generatedText = document.getElementById('generatedText');
+            const modelName = document.getElementById('modelName').value;
+            const prompt = document.getElementById('prompt').value;
+            
+            generationStatus.innerHTML = 'Generating text...';
+            generationStatus.className = 'status';
+            generatedText.innerHTML = '';
+            
+            try {
+                const response = await fetch('http://localhost:11435/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: modelName,
+                        prompt: prompt,
+                        stream: false
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    generationStatus.innerHTML = '✅ Text generated successfully!';
+                    generationStatus.className = 'status success';
+                    generatedText.innerHTML = data.response || 'No response text';
+                } else {
+                    const errorText = await response.text();
+                    generationStatus.innerHTML = `❌ Error: Server returned status ${response.status}`;
+                    generationStatus.className = 'status error';
+                    generatedText.innerHTML = errorText;
+                }
+            } catch (error) {
+                generationStatus.innerHTML = `❌ Error: ${error.message}`;
+                generationStatus.className = 'status error';
+            }
+        });
+    </script>
+</body>
+</html>

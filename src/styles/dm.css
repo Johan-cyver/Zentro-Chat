@@ -1,0 +1,122 @@
+/* DM Container Styles */
+.dm-container {
+  height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+/* Message Bubble Animations */
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-bubble {
+  animation: messageIn 0.3s ease-out;
+}
+
+/* Story Ring Animation */
+@keyframes storyRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.story-ring {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.story-ring::before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+/* Typing Indicator Animation */
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+
+.typing-indicator span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #8e8e8e;
+  border-radius: 50%;
+  margin: 0 1px;
+}
+
+.typing-indicator span:nth-child(1) { animation: typingBounce 1s infinite 0.1s; }
+.typing-indicator span:nth-child(2) { animation: typingBounce 1s infinite 0.2s; }
+.typing-indicator span:nth-child(3) { animation: typingBounce 1s infinite 0.3s; }
+
+/* Emoji Picker Styles */
+.emoji-picker-container {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Message Input Styles */
+.message-input {
+  transition: all 0.2s ease;
+}
+
+.message-input:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Like Button Animation */
+@keyframes likeAnimation {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.like-button:active {
+  animation: likeAnimation 0.3s ease;
+}
+
+/* Image Upload Preview */
+.image-preview {
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+/* Scrollbar Styles */
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+  .messages-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+} 

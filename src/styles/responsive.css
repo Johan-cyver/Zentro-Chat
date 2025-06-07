@@ -1,0 +1,321 @@
+/* Mobile-first responsive styles for Zentro Chat */
+
+/* Base mobile styles */
+@media (max-width: 767px) {
+  /* Chat container adjustments */
+  .chat-container {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    overflow: hidden;
+  }
+
+  /* Message bubbles */
+  .message-bubble {
+    max-width: 85%;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  /* Input areas */
+  .chat-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+  }
+
+  /* Emoji picker positioning */
+  .emoji-picker-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-radius: 16px 16px 0 0;
+    max-height: 60vh;
+  }
+
+  /* Modal adjustments */
+  .modal-mobile {
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+  }
+
+  /* Sidebar adjustments */
+  .sidebar-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-mobile.open {
+    transform: translateX(0);
+  }
+
+  /* Header adjustments */
+  .chat-header {
+    padding: 12px 16px;
+    min-height: 60px;
+  }
+
+  /* Button sizing */
+  .mobile-button {
+    min-height: 44px; /* iOS touch target minimum */
+    min-width: 44px;
+    padding: 8px;
+  }
+
+  /* Text sizing */
+  .mobile-text-sm {
+    font-size: 14px;
+  }
+
+  .mobile-text-xs {
+    font-size: 12px;
+  }
+
+  /* Spacing adjustments */
+  .mobile-spacing {
+    padding: 8px 12px;
+  }
+
+  /* Avatar sizing */
+  .avatar-mobile {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Search bar mobile */
+  .search-mobile {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: inherit;
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 479px) {
+  .message-bubble {
+    max-width: 90%;
+    font-size: 13px;
+  }
+
+  .chat-input {
+    font-size: 16px;
+    padding: 10px 14px;
+  }
+
+  .mobile-button {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 6px;
+  }
+
+  .avatar-mobile {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Reduce spacing on very small screens */
+  .mobile-spacing {
+    padding: 6px 10px;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .message-bubble {
+    max-width: 75%;
+  }
+
+  .emoji-picker-tablet {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+  }
+}
+
+/* Touch device specific styles */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Remove hover effects on touch devices */
+  .hover-effect:hover {
+    background-color: inherit;
+    color: inherit;
+  }
+
+  /* Add active states instead */
+  .touch-active:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 767px) and (orientation: landscape) {
+  .chat-container {
+    height: 100vh;
+  }
+
+  .emoji-picker-mobile {
+    max-height: 50vh;
+  }
+
+  /* Reduce header height in landscape */
+  .chat-header {
+    min-height: 50px;
+    padding: 8px 16px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .icon-crisp {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Dark mode adjustments for mobile */
+@media (prefers-color-scheme: dark) {
+  .mobile-dark {
+    background-color: #0f0f23;
+    color: #ffffff;
+  }
+
+  .mobile-surface-dark {
+    background-color: #1a1a2e;
+  }
+
+  .mobile-border-dark {
+    border-color: #374151;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .animate-mobile {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.focus-visible:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Safe area adjustments for notched devices */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-left {
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+
+  .safe-area-right {
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+
+/* Utility classes for mobile */
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Scrollbar styling for mobile */
+.mobile-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 2px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Loading states for mobile */
+.mobile-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.mobile-skeleton {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Error states */
+.mobile-error {
+  padding: 16px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #fca5a5;
+  text-align: center;
+}
+
+/* Success states */
+.mobile-success {
+  padding: 16px;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  color: #6ee7b7;
+  text-align: center;
+}

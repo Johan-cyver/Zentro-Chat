@@ -1,0 +1,72 @@
+.zentro-signin-container {
+    display: flex;
+    height: 100vh;
+    background-color: #000;
+    color: white;
+  }
+  
+  .signin-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    background: #111;
+  }
+  
+  .signin-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+  }
+  
+  .login-gif {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+  
+  .neon-text {
+    font-size: 3rem;
+    color: #00ffe1;
+    text-shadow: 0 0 10px #00ffe1, 0 0 20px #00ffe1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sub-text {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #ccc;
+  }
+  
+  .signin-form input {
+    background-color: #1c1c1c;
+    color: white;
+    border: none;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .signin-form button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #00ffe1;
+    color: #000;
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: 0.3s;
+  }
+  
+  .signin-form button:hover {
+    background-color: #00d6b3;
+  }
+  
