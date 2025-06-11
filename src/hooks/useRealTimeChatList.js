@@ -3,7 +3,8 @@ import { useUser } from '../contexts/UserContext';
 import firebaseChatService from '../services/firebaseChat';
 
 export const useRealTimeChatList = () => {
-  const { userProfile } = useUser();
+  const userContext = useUser();
+  const userProfile = userContext?.userProfile;
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
 

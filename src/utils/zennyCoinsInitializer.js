@@ -6,61 +6,39 @@ class ZennyCoinsInitializer {
     this.initialized = false;
   }
 
-  // Initialize the Zenny coin system
+  // Initialize the Zenny coin system (DISABLED per user preference)
   async initialize() {
     if (this.initialized) {
-      console.log('✅ Zenny Coins system already initialized');
+      console.log('✅ Zenny Coins system disabled per user preference');
       return;
     }
 
     try {
-      console.log('🚀 Initializing Zenny Coins system...');
-      
-      // Initialize admin account with 1M Zenny coins
-      await zennyCoinsService.initializeAdminAccount();
-      
-      // Mark as initialized
+      console.log('🚀 Zenny Coins system disabled per user preference');
+
+      // Skip initialization - Zenny coins are disabled
+      // await zennyCoinsService.initializeAdminAccount();
+
+      // Mark as initialized (but actually disabled)
       this.initialized = true;
+
+      console.log('✅ Zenny Coins system disabled successfully!');
       
-      console.log('✅ Zenny Coins system initialized successfully!');
-      
-      // Show welcome message for development
+      // Show disabled message for development
       if (process.env.NODE_ENV === 'development') {
         console.log(`
-🎉 ZENTRO ZENNY COIN SYSTEM ACTIVATED! 🎉
+🚫 ZENTRO ZENNY COIN SYSTEM DISABLED 🚫
 
-💰 Features Available:
-• Earn Zenny coins through activities
-• Purchase coins with real money (1 USD = 0.5 Zenny)
-• Apply boosts to apps (Bronze, Silver, Gold, Platinum, Diamond)
-• Participate in weekly spotlight auctions
-• Admin account initialized with 1,000,000 Zenny coins
+The Zenny coin system has been disabled per user preference.
+Focus is now on core Phase 1 features:
+• Zentro ID (Dynamic user stats)
+• Battle System (Code/design/logic duels)
+• Squad System with Team Wars
+• ZennyGPT Memory Layer
+• Achievement System
+• Leaderboards
 
-🏆 Spotlight Auction System:
-• Every Saturday at 7 PM IST
-• 7 spotlight positions available
-• 15 minutes per position auction
-• Winners get 1 week of spotlight visibility
-
-🚀 Boost System:
-• Bronze: 10 Zenny (Basic visibility)
-• Silver: 25 Zenny (Enhanced visibility + badge)
-• Gold: 50 Zenny (High visibility + trending)
-• Platinum: 100 Zenny (Premium visibility + analytics)
-• Diamond: 200 Zenny (Maximum visibility + VIP support)
-
-💡 Activity Rewards:
-• Daily login: 5 Zenny
-• Send message: 1 Zenny
-• Create post: 10 Zenny
-• App upload: 50 Zenny
-• Win auction: 25 Zenny
-
-🔒 Security Features:
-• Server-side validation
-• Daily earning limits
-• Audit logs
-• Anti-cheat protection
+All features will use Firebase for real-time functionality.
         `);
       }
       
@@ -70,36 +48,10 @@ class ZennyCoinsInitializer {
     }
   }
 
-  // Award coins for user activities
+  // Award coins for user activities (DISABLED)
   async awardActivityCoins(userId, activityType) {
-    if (!this.initialized) {
-      console.warn('Zenny Coins system not initialized, skipping reward');
-      return;
-    }
-
-    const rewards = zennyCoinsService.getActivityRewards();
-    const amount = rewards[activityType];
-    
-    if (amount) {
-      try {
-        const result = await zennyCoinsService.awardCoins(
-          userId, 
-          amount, 
-          activityType, 
-          `Earned ${amount} Zenny coins for ${activityType.replace('_', ' ')}`
-        );
-        
-        if (result.success) {
-          console.log(`💰 Awarded ${amount} Zenny coins for ${activityType}`);
-          return result;
-        } else {
-          console.warn(`Failed to award coins: ${result.error}`);
-        }
-      } catch (error) {
-        console.error('Error awarding activity coins:', error);
-      }
-    }
-    
+    // Zenny coins system is disabled per user preference
+    console.log(`🚫 Zenny coin reward skipped for ${activityType} (system disabled)`);
     return null;
   }
 

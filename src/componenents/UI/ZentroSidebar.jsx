@@ -1,25 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaEdit, FaEnvelope, FaBriefcase, FaSignOutAlt, FaRocket, FaUsers, FaDatabase, FaCog } from "react-icons/fa";
+import { FaUser, FaEdit, FaEnvelope, FaBriefcase, FaSignOutAlt, FaRocket, FaUsers, FaDatabase, FaCog, FaGamepad, FaShieldAlt, FaChartLine } from "react-icons/fa";
 import { clearAuthState } from "../../firebase";
 import { useUser } from "../../contexts/UserContext";
 import DataManager from "../../components/Debug/DataManager";
 import AdminPanel from "../../components/Admin/AdminPanel";
+// import ZennyCoinsWidget from "../../components/ZennyCoins/ZennyCoinsWidget"; // Temporarily disabled
 
 const icons = [
   { icon: <FaEnvelope />, label: "Messages", view: "dm" },
+  { icon: <FaChartLine />, label: "Dashboard", view: "dashboard", isRoute: true },
   { icon: <FaUsers />, label: "Groups", view: "groups", isRoute: true },
   { icon: <FaEdit />, label: "Zentro Network", view: "blog" },
   { icon: <FaBriefcase />, label: "ZentroNet", view: "professional" },
+  { icon: <FaGamepad />, label: "Battle Arena", view: "battle", isRoute: true },
+  { icon: <FaShieldAlt />, label: "Squad Central", view: "squads", isRoute: true },
   { icon: <FaRocket />, label: "Zentrium", view: "zentrium" },
   // Add more icons/views as needed
 ];
 
 const ZentroSidebar = ({ currentView, setCurrentView }) => {
   const navigate = useNavigate();
-  const { isAdmin, canAccessAdminPanel } = useUser();
+  const userContext = useUser();
   const [showDataManager, setShowDataManager] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
+
+  // Handle loading state
+  if (!userContext) {
+    return <div>Loading...</div>;
+  }
+
+  const { isAdmin, canAccessAdminPanel } = userContext;
 
   // Handle logout
   const handleLogout = async () => {
@@ -42,7 +53,14 @@ const ZentroSidebar = ({ currentView, setCurrentView }) => {
 
   return (
     <div className="w-14 h-screen bg-black text-purple-400 flex flex-col items-center relative border-r border-purple-700">
-      <div className="flex flex-col gap-6 mt-4">
+      {/* ZennyCoins Widget at Top - Temporarily disabled */}
+      {/*
+      <div className="mt-2 mb-4">
+        <ZennyCoinsWidget className="scale-75" />
+      </div>
+      */}
+
+      <div className="flex flex-col gap-6">
         {icons.map(({ icon, label, view, isRoute }) => (
           <div
             key={view}
@@ -54,8 +72,8 @@ const ZentroSidebar = ({ currentView, setCurrentView }) => {
               if (isRoute) {
                 navigate(`/${view}`);
               } else if (view === 'professional') {
-                // Navigate to chat room with professional view
-                navigate('/chat', { state: { view: 'professional' } });
+                // Navigate directly to the enhanced ZentroDirectory
+                navigate('/directory');
               } else {
                 setCurrentView(view);
               }

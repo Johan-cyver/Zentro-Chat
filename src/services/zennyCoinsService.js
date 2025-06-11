@@ -310,7 +310,16 @@ class ZennyCoinsService {
       'invite_friend': 1,
       'app_upload': 0.6,
       'app_featured': 2,
-      'win_auction': 5
+      'win_auction': 5,
+      // Professional Directory Activities
+      'skill_endorsement': 1,      // For endorsing someone's skill
+      'skill_endorsed': 2,         // For receiving an endorsement
+      'profile_view': 0.1,         // For viewing someone's profile
+      'profile_viewed': 0.2,       // For having your profile viewed
+      'tip_sent': 0,               // No reward for sending tips (cost only)
+      'tip_received': 1,           // Reward for receiving tips
+      'directory_join': 5,         // One-time reward for joining directory
+      'skill_milestone': 3         // Reward for reaching skill endorsement milestones
     };
   }
 }

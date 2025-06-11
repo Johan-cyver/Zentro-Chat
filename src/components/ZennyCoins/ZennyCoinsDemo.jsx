@@ -9,7 +9,8 @@ import zennyCoinsService from '../../services/zennyCoinsService';
 import zennyCoinsInitializer from '../../utils/zennyCoinsInitializer';
 
 const ZennyCoinsDemo = () => {
-  const { userProfile } = useUser();
+  const userContext = useUser();
+  const userProfile = userContext?.userProfile;
   const [showSpotlightAuction, setShowSpotlightAuction] = useState(false);
   const [showBoostSystem, setShowBoostSystem] = useState(false);
   const [userBalance, setUserBalance] = useState(0);

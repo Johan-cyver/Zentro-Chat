@@ -84,6 +84,38 @@ const LoginPage = () => {
     }
   };
 
+  // Handle GitHub login
+  const handleGithubLogin = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // For now, show a message that GitHub login is coming soon
+      setError('GitHub login is coming soon! Please use Google or email/password for now.');
+    } catch (error) {
+      console.error('GitHub login error:', error);
+      setError('GitHub login failed. Please try another method.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle Facebook login
+  const handleFacebookLogin = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // For now, show a message that Facebook login is coming soon
+      setError('Facebook login is coming soon! Please use Google or email/password for now.');
+    } catch (error) {
+      console.error('Facebook login error:', error);
+      setError('Facebook login failed. Please try another method.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Get user-friendly error messages
   const getErrorMessage = (errorCode) => {
     switch (errorCode) {
@@ -347,7 +379,9 @@ const LoginPage = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <motion.button
                     type="button"
-                    className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
+                    onClick={handleGithubLogin}
+                    disabled={loading}
+                    className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -356,7 +390,9 @@ const LoginPage = () => {
                   </motion.button>
                   <motion.button
                     type="button"
-                    className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
+                    onClick={handleFacebookLogin}
+                    disabled={loading}
+                    className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

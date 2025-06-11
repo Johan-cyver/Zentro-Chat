@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaLink, FaGithub, FaLinkedin, FaFileAlt, FaRocket } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
 import SkillsEndorsements from './SkillsEndorsements';
@@ -23,8 +23,52 @@ const ProfessionalView = ({ user = null }) => {
   const [editingApp, setEditingApp] = useState(null);
 
   // Use the passed user prop if viewing someone else's profile, otherwise use current user
-  const displayUser = user || userProfile;
+  const [displayUser, setDisplayUser] = useState(user || userProfile);
   const isViewingOwnProfile = !user || (user.uid === userProfile.uid);
+
+  // Restore profile data from localStorage on component mount
+  useEffect(() => {
+    if (isViewingOwnProfile && userProfile?.uid) {
+      try {
+        // Try to restore from localStorage
+        const storedProfile = localStorage.getItem(`zentro_user_profile_${userProfile.uid}`);
+        const backupProfile = localStorage.getItem(`zentro_professional_backup_${userProfile.uid}`);
+
+        if (storedProfile) {
+          const parsed = JSON.parse(storedProfile);
+          if (parsed.professional) {
+            console.log('✅ Restored profile data from localStorage');
+            setDisplayUser(prev => ({
+              ...prev,
+              professional: {
+                ...prev.professional,
+                ...parsed.professional
+              }
+            }));
+          }
+        } else if (backupProfile) {
+          const parsed = JSON.parse(backupProfile);
+          console.log('✅ Restored profile data from backup');
+          setDisplayUser(prev => ({
+            ...prev,
+            professional: {
+              ...prev.professional,
+              ...parsed
+            }
+          }));
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to restore profile data:', error);
+      }
+    }
+  }, [userProfile?.uid, isViewingOwnProfile]);
+
+  // Update displayUser when userProfile changes
+  useEffect(() => {
+    if (!user) {
+      setDisplayUser(userProfile);
+    }
+  }, [userProfile, user]);
 
   // Product showcase data
   const [products, setProducts] = useState([
@@ -121,10 +165,46 @@ const ProfessionalView = ({ user = null }) => {
     }
   };
 
-  // Save profile changes
-  const saveProfileChanges = () => {
-    // Already saved via updateProfessionalProfile
-    setIsEditMode(false);
+  // Save profile changes with proper persistence
+  const saveProfileChanges = async () => {
+    try {
+      // Force save all current professional data to Firebase and localStorage
+      const currentProfessionalData = {
+        ...displayUser.professional,
+        lastUpdated: new Date().toISOString(),
+        timestamp: Date.now()
+      };
+
+      // Update via context (which should save to Firebase)
+      await updateProfessionalProfile(currentProfessionalData);
+
+      // Ensure localStorage persistence
+      if (userProfile?.uid) {
+        try {
+          const storedProfile = JSON.parse(localStorage.getItem(`zentro_user_profile_${userProfile.uid}`) || '{}');
+          const updatedProfile = {
+            ...storedProfile,
+            professional: currentProfessionalData,
+            timestamp: Date.now(),
+            lastSaved: new Date().toISOString()
+          };
+          localStorage.setItem(`zentro_user_profile_${userProfile.uid}`, JSON.stringify(updatedProfile));
+
+          // Create backup for extra persistence
+          localStorage.setItem(`zentro_professional_backup_${userProfile.uid}`, JSON.stringify(currentProfessionalData));
+
+          console.log('✅ Profile saved to localStorage successfully');
+        } catch (storageError) {
+          console.warn('⚠️ localStorage save failed:', storageError);
+        }
+      }
+
+      setIsEditMode(false);
+      alert('✅ Profile saved successfully!');
+    } catch (error) {
+      console.error('❌ Error saving profile:', error);
+      alert('❌ Failed to save profile. Please try again.');
+    }
   };
 
   return (
@@ -392,6 +472,19 @@ const ProfessionalView = ({ user = null }) => {
           }}
         />
       )}
+
+      {/* Link Edit Modal */}
+      {showLinkModal && (
+        <LinkEditModal
+          linkType={editingLink}
+          currentUrl={displayUser.professional?.links?.[editingLink] || ''}
+          onSave={updateLink}
+          onClose={() => {
+            setShowLinkModal(false);
+            setEditingLink(null);
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -498,6 +591,74 @@ const ProductCard = ({ product, isEditMode }) => {
           </a>
           <button className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-white text-sm transition-colors duration-300">
             Contact
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Link Edit Modal component
+const LinkEditModal = ({ linkType, currentUrl, onSave, onClose }) => {
+  const [url, setUrl] = React.useState(currentUrl);
+
+  const handleSave = () => {
+    onSave(linkType, url);
+  };
+
+  const getLinkLabel = (type) => {
+    const labels = {
+      resume: 'Resume',
+      github: 'GitHub',
+      portfolio: 'Portfolio',
+      linkedin: 'LinkedIn'
+    };
+    return labels[type] || type;
+  };
+
+  const getPlaceholder = (type) => {
+    const placeholders = {
+      resume: 'https://drive.google.com/file/d/your-resume-id/view',
+      github: 'https://github.com/yourusername',
+      portfolio: 'https://yourportfolio.com',
+      linkedin: 'https://linkedin.com/in/yourprofile'
+    };
+    return placeholders[type] || 'https://example.com';
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-700">
+        <h3 className="text-xl font-bold text-white mb-4">
+          Edit {getLinkLabel(linkType)} URL
+        </h3>
+
+        <div className="mb-4">
+          <label className="block text-gray-400 text-sm mb-2">
+            {getLinkLabel(linkType)} URL
+          </label>
+          <input
+            type="url"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder={getPlaceholder(linkType)}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-purple-500 focus:outline-none"
+            autoFocus
+          />
+        </div>
+
+        <div className="flex space-x-3">
+          <button
+            onClick={handleSave}
+            className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-2 px-4 rounded-lg transition-all duration-300"
+          >
+            Save
+          </button>
+          <button
+            onClick={onClose}
+            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors duration-300"
+          >
+            Cancel
           </button>
         </div>
       </div>

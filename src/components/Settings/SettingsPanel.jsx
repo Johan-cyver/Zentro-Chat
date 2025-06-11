@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { FaCog, FaTimes, FaBell, FaVolumeUp, FaVolumeOff, FaEye, FaEyeSlash, FaPalette, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useNotifications } from '../Notifications/CustomNotificationSystem';
 import notificationService from '../../services/notificationService';
 import { clearAuthState } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import ThemeToggle from '../UI/ThemeToggle';
 
 const SettingsPanel = ({ isOpen, onClose, theme }) => {
-  const { userProfile } = useUser();
+  const userContext = useUser();
+  const userProfile = userContext?.userProfile;
+  const { currentTheme } = useTheme();
   const navigate = useNavigate();
   const [settings, setSettings] = useState({
     notifications: true,
@@ -261,11 +265,23 @@ const SettingsPanel = ({ isOpen, onClose, theme }) => {
                 </label>
               </div>
 
-              {/* Theme Info */}
+              {/* Theme Selection */}
+              <div className="p-4 bg-gray-800 rounded-lg">
+                <h4 className="text-white font-medium mb-2">App Theme</h4>
+                <p className="text-gray-400 text-sm mb-4">
+                  Choose your preferred visual style for the entire app
+                </p>
+                <div className="mb-4">
+                  <p className="text-sm text-gray-300 mb-2">Current: {currentTheme?.name || 'Default'}</p>
+                  <ThemeToggle variant="minimal" />
+                </div>
+              </div>
+
+              {/* Chat Themes */}
               <div className="p-4 bg-gray-800 rounded-lg">
                 <h4 className="text-white font-medium mb-2">Chat Themes</h4>
                 <p className="text-gray-400 text-sm mb-3">
-                  Change chat themes from within the DM interface
+                  Change individual chat themes from within the DM interface
                 </p>
                 <button
                   onClick={() => navigate('/chat')}

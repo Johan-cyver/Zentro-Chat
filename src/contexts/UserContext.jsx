@@ -7,6 +7,7 @@ import firebaseChatService from '../services/firebaseChat';
 import professionalService from '../services/professionalService';
 import userDataSync from '../utils/userDataSync';
 import adminService from '../services/adminService';
+import zentroIdService from '../services/zentroIdService';
 
 // Create the user context
 const UserContext = createContext();
@@ -166,6 +167,17 @@ export const UserProvider = ({ children }) => {
           await firebaseChatService.syncUserProfile(updatedProfile);
         } catch (error) {
           console.error('Error syncing user to Firebase:', error);
+        }
+
+        // Initialize or get Zentro ID
+        try {
+          let zentroId = await zentroIdService.getZentroId(user.uid);
+          if (!zentroId) {
+            zentroId = await zentroIdService.initializeZentroId(user.uid, updatedProfile);
+            console.log('✅ Zentro ID initialized for new user');
+          }
+        } catch (error) {
+          console.error('❌ Error initializing Zentro ID:', error);
         }
 
         // Here you would typically fetch additional user data from your database

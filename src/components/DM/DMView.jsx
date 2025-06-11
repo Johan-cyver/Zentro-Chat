@@ -9,7 +9,7 @@ import { useUser } from '../../contexts/UserContext';
 
 const DMView = () => {
   const location = useLocation();
-  const { canAccessDataManager } = useUser();
+  const userContext = useUser();
   const [selectedChat, setSelectedChat] = useState(null);
   const [currentTheme, setCurrentTheme] = useState(() => {
     const savedTheme = localStorage.getItem('dm_theme');
@@ -40,11 +40,11 @@ const DMView = () => {
 
   return (
     <div
-      className="flex w-full h-full"
+      className="flex w-full h-screen overflow-hidden"
       style={{ backgroundColor: currentTheme.colors.background }}
     >
-      {/* Sidebar - Hidden on mobile when chat is selected */}
-      <div className={`${selectedChat ? 'hidden lg:flex' : 'flex'} flex-shrink-0 h-full`}>
+      {/* Sidebar - Fixed width, always visible */}
+      <div className="flex-shrink-0 w-80 h-full">
         <RealTimeDMSidebar
           onSelectChat={handleSelectChat}
           selectedChat={selectedChat}
@@ -52,8 +52,8 @@ const DMView = () => {
         />
       </div>
 
-      {/* Chat Area */}
-      <div className="flex-1 flex flex-col h-full">
+      {/* Chat Area - Takes remaining space */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
         {selectedChat ? (
           selectedChat?.otherUser?.id === 'zentro_bot' || selectedChat?.otherUser?.isBot || selectedChat.id === 'zentro_bot_chat' || selectedChat.name === 'Zenny' || selectedChat?.otherUser?.name === 'Zenny' ? (
             <ZentroBotChat
@@ -70,7 +70,7 @@ const DMView = () => {
           )
         ) : (
           <div
-            className="flex-1 flex flex-col items-center justify-center p-4 md:p-8"
+            className="flex-1 flex flex-col items-center justify-center p-4 md:p-8 overflow-y-auto"
             style={{ backgroundColor: currentTheme.colors.surface }}
           >
             <div className="text-center w-full max-w-2xl">
@@ -123,7 +123,7 @@ const DMView = () => {
               </div>
 
               {/* Debug Data Manager Button - Admin Only */}
-              {canAccessDataManager() && (
+              {userContext && userContext.canAccessDataManager && userContext.canAccessDataManager() && (
                 <div className="mt-6">
                   <button
                     onClick={() => setShowDataManager(true)}

@@ -625,12 +625,31 @@ const ZentriumView = () => {
           </div>
         )}
 
-        {/* Header: Title, Upload, Spotlight Auction, and Boost System Buttons */}
-        <header className="mb-8 md:mb-12">
+        {/* Professional Header */}
+        <header className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Zentrium
+              </h1>
+              <p className="text-lg text-gray-300">
+                Professional app marketplace and deployment platform
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-purple-500/20">
+                <div className="text-sm text-gray-400">Total Apps</div>
+                <div className="text-xl font-bold text-purple-400">{apps.length}</div>
+              </div>
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-blue-500/20">
+                <div className="text-sm text-gray-400">Downloads</div>
+                <div className="text-xl font-bold text-blue-400">{apps.reduce((sum, app) => sum + (app.downloads || 0), 0)}</div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-text text-transparent">
-                Zentrium App Hub
-            </h1>
             <div className="flex flex-wrap gap-2 items-center">
               {userProfile && (
                 <button

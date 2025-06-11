@@ -1,0 +1,17 @@
+To completely remove Visual Studio Code (VS Code) and its configurations from Windows, follow these steps:
+
+Uninstall VS Code:
+[Go to the Windows Start menu and search for "Add or Remove Programs."
+Find Visual Studio Code, click on it, and select "Uninstall."]
+Remove Configuration Files:
+Open the Run dialog by pressing Win + R.
+Type %AppData% and press Enter to open the AppData folder.
+Navigate to C:\Users\[Your Username]\AppData\Roaming\Code and delete the entire Code folder.
+Additionally, navigate to C:\Users\[Your Username]\.vscode and delete the .vscode folder to remove all extensions and user-specific settings.
+Remove Environment Variables:
+Search for "Environment Variables" in the Start menu and open it.
+Remove any references to Visual Studio Code in the system and user environment variables.
+Clear Cache and Logs:
+Navigate to C:\Users\[Your Username]\AppData\Local\Temp and delete any VS Code-related temporary files.
+Navigate to C:\Users\[Your Username]\AppData\Local\Microsoft VS Code and delete the Microsoft VS Code folder to remove logs and cache.
+After completing these steps, VS Code will be completely removed from your system, and you can reinstall it as a new user without any previous settings or configurations.

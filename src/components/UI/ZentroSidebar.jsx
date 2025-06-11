@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaBlog, FaInbox, FaUsers, FaRocket, FaUserFriends, FaCog, FaUser } from 'react-icons/fa'; // Changed FaRobot to FaRocket, added FaUser
-import ZennyCoinsWidget from '../ZennyCoins/ZennyCoinsWidget';
 
 const ZentroSidebar = ({ currentView, setCurrentView }) => {
   const navigate = useNavigate();
@@ -68,7 +67,6 @@ const ZentroSidebar = ({ currentView, setCurrentView }) => {
     <div className="w-64 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">Zentro</h1>
-        <ZennyCoinsWidget className="justify-center" />
       </div>
       
       <nav className="mt-4 flex-grow">

@@ -4,7 +4,8 @@ import { useUser } from '../../contexts/UserContext';
 import friendsService from '../../services/friendsService';
 
 const UserActionDropdown = ({ targetUser, onClose, theme, position = 'bottom-right' }) => {
-  const { userProfile } = useUser();
+  const userContext = useUser();
+  const userProfile = userContext?.userProfile;
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(null);

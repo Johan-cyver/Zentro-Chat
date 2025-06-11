@@ -1,8 +1,8 @@
-console.log('🔴🔴🔴 [ZentriumLayout.jsx] File is being loaded/parsed by JavaScript NOW! 🔴🔴🔴');
-
 import React, { useState, Suspense, useEffect } from 'react';
 import { Outlet, useOutletContext as useParentOutletContext } from 'react-router-dom';
 import InAppBrowser from '../components/AppHub/InAppBrowser';
+
+console.log('🔴🔴🔴 [ZentriumLayout.jsx] File is being loaded/parsed by JavaScript NOW! 🔴🔴🔴');
 
 // THIS IS THE EXTREMELY SIMPLIFIED ZentriumLayout FOR TESTING
 const ZentriumLayout = () => {

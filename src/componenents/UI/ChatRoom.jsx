@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ZentroSidebar from "./ZentroSidebar";
 import "./ChatRoom.css";
 import ProfilePanel from "./ProfilePanel";
 import BlogSection from "../../components/Blog/BlogSection";
@@ -8,6 +7,7 @@ import DMView from "../../components/DM/DMView";
 import ProfessionalDirectory from "./ProfessionalDirectory";
 import ZentriumView from "../../components/AppHub/ZentriumView";
 import MobileNavigation from "../../components/Mobile/MobileNavigation";
+import ZennyCompanion from "../../components/ZennyGPT/ZennyCompanion";
 import { useMobileBehavior } from "../../hooks/useResponsive";
 
 const ChatRoom = () => {
@@ -89,13 +89,8 @@ const ChatRoom = () => {
 
   return (
     <div className="flex h-screen bg-black text-white">
-      {/* Desktop Sidebar - Hidden on mobile */}
-      <div className="hidden md:flex">
-        <ZentroSidebar currentView={currentView} setCurrentView={setCurrentView} />
-      </div>
-
-      {/* Main Content */}
-      <div className={`flex-1 overflow-y-auto ${shouldShowMobileLayout ? 'pt-16 pb-16' : ''}`}>
+      {/* Main Content - Full width since AppSidebar is now global */}
+      <div className={`flex-1 overflow-y-auto ${shouldShowMobileLayout ? 'pt-16 pb-16' : 'pl-4'}`}>
         {renderView()}
       </div>
 
@@ -103,6 +98,9 @@ const ChatRoom = () => {
       {shouldShowMobileLayout && (
         <MobileNavigation currentView={currentView} setCurrentView={setCurrentView} />
       )}
+
+      {/* Zenny AI Companion - Always visible */}
+      <ZennyCompanion />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import MoodTracker from './MoodTracker';
 import InterestsSection from './InterestsSection';
 import FavoritesSection from './FavoritesSection';
 import PostsSection from './PostsSection';
+import ZentroIdTimeline from '../ZentroId/ZentroIdTimeline';
 
 const PersonalView = ({ user = null }) => {
   const navigate = useNavigate();
@@ -1022,6 +1023,12 @@ const PersonalView = ({ user = null }) => {
 
       {/* Favorites Section */}
       <FavoritesSection user={user} isViewingOwnProfile={isViewingOwnProfile} />
+
+      {/* Zentro ID Timeline */}
+      <ZentroIdTimeline
+        userId={displayUser?.uid}
+        isOwnProfile={isViewingOwnProfile}
+      />
 
       {/* Posts Section - only show for own profile */}
       {isViewingOwnProfile && <PostsSection />}

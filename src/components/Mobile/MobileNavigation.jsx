@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaHome, 
-  FaEnvelope, 
-  FaUsers, 
-  FaEdit, 
-  FaBriefcase, 
+import {
+  FaHome,
+  FaEnvelope,
+  FaUsers,
+  FaEdit,
+  FaBriefcase,
   FaRocket,
   FaUser,
   FaBars,
   FaTimes,
   FaSignOutAlt,
   FaCog,
-  FaDatabase
+  FaDatabase,
+  FaGamepad,
+  FaShieldAlt
 } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
 import { clearAuthState } from '../../firebase';
 import { useMobileBehavior } from '../../hooks/useResponsive';
-import ZennyCoinsWidget from '../ZennyCoins/ZennyCoinsWidget';
 
 const MobileNavigation = ({ currentView, setCurrentView }) => {
   const navigate = useNavigate();
@@ -62,14 +63,14 @@ const MobileNavigation = ({ currentView, setCurrentView }) => {
 
   // Additional items for sidebar
   const sidebarItems = [
-    { 
-      icon: <FaRocket />, 
-      label: "Zentrium", 
+    {
+      icon: <FaRocket />,
+      label: "Zentrium",
       path: "/zentrium"
     },
-    { 
-      icon: <FaUser />, 
-      label: "Profile", 
+    {
+      icon: <FaUser />,
+      label: "Profile",
       path: "/profile"
     }
   ];
@@ -124,20 +125,22 @@ const MobileNavigation = ({ currentView, setCurrentView }) => {
   return (
     <>
       {/* Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 z-40 md:hidden">
-        <div className="flex items-center justify-around py-2">
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-gray-800 border-t border-purple-500/30 z-40 md:hidden backdrop-blur-sm">
+        <div className="flex items-center justify-around py-3 px-2">
           {mainNavItems.map((item, index) => (
             <button
               key={index}
               onClick={() => handleNavigation(item)}
-              className={`flex flex-col items-center justify-center p-2 min-w-0 flex-1 ${
+              className={`flex flex-col items-center justify-center p-3 min-w-0 flex-1 rounded-xl transition-all duration-300 ${
                 isActive(item)
-                  ? 'text-purple-400'
-                  : 'text-gray-400 hover:text-white'
-              } transition-colors`}
+                  ? 'text-white bg-gradient-to-t from-purple-600 to-purple-500 shadow-lg shadow-purple-500/25'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+              }`}
             >
-              <div className="text-lg mb-1">{item.icon}</div>
-              <span className="text-xs truncate">{item.label}</span>
+              <div className={`text-xl mb-1 ${isActive(item) ? 'scale-110' : ''} transition-transform`}>
+                {item.icon}
+              </div>
+              <span className="text-xs font-medium truncate">{item.label}</span>
             </button>
           ))}
         </div>
@@ -264,19 +267,24 @@ const MobileNavigation = ({ currentView, setCurrentView }) => {
       </AnimatePresence>
 
       {/* Top Status Bar for Mobile */}
-      <div className="fixed top-0 left-0 right-0 bg-gray-900 border-b border-gray-700 z-30 md:hidden">
+      <div className="fixed top-0 left-0 right-0 bg-gradient-to-b from-gray-900 to-gray-800 border-b border-purple-500/30 z-30 md:hidden backdrop-blur-sm">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
-            <div className="text-white font-bold text-lg">Zentro Chat</div>
+            <div className="text-white font-bold text-xl bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Zentro Chat
+            </div>
           </div>
           <div className="flex items-center space-x-2">
-            <ZennyCoinsWidget className="scale-90" />
-            <img
-              src={userProfile?.photoURL || '/default-avatar.png'}
-              alt={userProfile?.displayName}
-              className="w-8 h-8 rounded-full cursor-pointer"
-              onClick={() => setShowSidebar(true)}
-            />
+            {/* Profile Picture */}
+            <div className="relative">
+              <img
+                src={userProfile?.photoURL || '/default-avatar.png'}
+                alt={userProfile?.displayName}
+                className="w-10 h-10 rounded-full cursor-pointer border-2 border-purple-500/50 hover:border-purple-400 transition-colors shadow-lg"
+                onClick={() => setShowSidebar(true)}
+              />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,32 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaCoins, FaPlus, FaHistory, FaTimes, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../contexts/UserContext';
 import zennyCoinsService from '../../services/zennyCoinsService';
 
 const ZennyCoinsWidget = ({ className = '' }) => {
-  const { userProfile, updateUserProfile } = useUser();
+  const userContext = useUser();
+  const userProfile = userContext?.userProfile;
+  const updateUserProfile = userContext?.updateProfile;
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Load user's Zenny coin balance
-  useEffect(() => {
-    if (userProfile?.uid) {
-      loadBalance();
-    }
-  }, [userProfile?.uid]);
-
-  const loadBalance = async () => {
+  const loadBalance = useCallback(async () => {
     try {
       const userBalance = await zennyCoinsService.getUserBalance(userProfile.uid);
       setBalance(userBalance);
     } catch (error) {
       console.error('Error loading balance:', error);
     }
-  };
+  }, [userProfile.uid]);
+
+  // Load user's Zenny coin balance
+  useEffect(() => {
+    if (userProfile?.uid) {
+      loadBalance();
+    }
+  }, [userProfile?.uid, loadBalance]);
 
   const loadTransactionHistory = async () => {
     try {
@@ -79,19 +81,43 @@ const ZennyCoinsWidget = ({ className = '' }) => {
 
   return (
     <>
-      {/* Zenny Coins Widget */}
+      {/* Premium Zenny Coins Widget */}
       <div className={`flex items-center space-x-2 ${className}`}>
-        <div className="flex items-center space-x-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
-          <FaCoins className="text-yellow-200" />
-          <span>{balance.toLocaleString()}</span>
+        <div className="relative group">
+          {/* Glow Effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-600 rounded-full blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+          {/* Main Widget */}
+          <div className="relative flex items-center space-x-2 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-xl border border-yellow-400/50">
+            {/* Custom Zenny Logo */}
+            <div className="relative">
+              <div className="w-5 h-5 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full flex items-center justify-center shadow-inner">
+                <div className="w-3 h-3 bg-gradient-to-br from-orange-400 to-yellow-600 rounded-full flex items-center justify-center">
+                  <span className="text-[8px] font-black text-white">Z</span>
+                </div>
+              </div>
+              {/* Sparkle Effect */}
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80 animate-ping"></div>
+            </div>
+
+            <span className="text-white font-extrabold tracking-wide">
+              {balance.toLocaleString()}
+            </span>
+
+            {/* Premium Badge */}
+            <div className="text-xs bg-white/20 px-2 py-0.5 rounded-full text-yellow-100 font-medium">
+              ZENNY
+            </div>
+          </div>
         </div>
-        
+
         <button
           onClick={() => setShowPurchaseModal(true)}
-          className="flex items-center space-x-1 bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-full text-xs transition-colors"
+          className="relative group flex items-center justify-center w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg"
           title="Purchase Zenny Coins"
         >
-          <FaPlus />
+          <FaPlus className="text-sm" />
+          <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
         </button>
         
         <button

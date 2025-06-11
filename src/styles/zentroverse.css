@@ -1,0 +1,468 @@
+/* ZentroVerse Nexus - Revolutionary Professional Directory Styles */
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.8), 0 0 60px rgba(168, 85, 247, 0.4);
+  }
+}
+
+@keyframes neural-pulse {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes hologram-flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes energy-flow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes power-charge {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes dimension-shift {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateY(5deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateY(-5deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+}
+
+/* Custom utility classes */
+.animate-spin-reverse {
+  animation: spin-reverse 3s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-neural-pulse {
+  animation: neural-pulse 4s ease-in-out infinite;
+}
+
+.animate-hologram-flicker {
+  animation: hologram-flicker 0.1s ease-in-out infinite;
+}
+
+.animate-power-charge {
+  animation: power-charge 1.5s ease-in-out infinite;
+}
+
+.animate-dimension-shift {
+  animation: dimension-shift 8s ease-in-out infinite;
+}
+
+/* Perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-y-12 {
+  transform: rotateY(12deg);
+}
+
+/* Gradient text effects */
+.text-hologram {
+  background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff00, #ffff00);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glitch effects */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.5s infinite;
+  color: #00ffff;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.5s infinite;
+  color: #ff00ff;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 14%, 15%, 49%, 50%, 99%, 100% {
+    transform: translate(0);
+  }
+  15%, 49% {
+    transform: translate(-2px, 2px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 20%, 21%, 62%, 63%, 99%, 100% {
+    transform: translate(0);
+  }
+  21%, 62% {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Neon border effects */
+.neon-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff00, #ffff00) 1;
+  border-image-slice: 1;
+}
+
+.neon-border-animated {
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff00, #ffff00) border-box;
+  background-size: 400% 400%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Energy particle effects */
+.energy-particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.3) 2px, transparent 2px),
+    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.3) 2px, transparent 2px),
+    radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.3) 2px, transparent 2px);
+  background-size: 50px 50px, 30px 30px, 70px 70px;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Holographic card effect */
+.holographic-card {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: energy-flow 3s infinite;
+}
+
+/* ZentroDirectory specific styles */
+.zentro-directory-layout {
+  position: relative;
+  overflow: hidden;
+}
+
+.zentro-sidebar {
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.zentro-main-content {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+}
+
+.zenny-coin-widget {
+  position: relative;
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.zenny-coin-tip-button {
+  position: relative;
+  z-index: 10;
+}
+
+/* Professional card layout fixes */
+.professional-card {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.professional-card:hover {
+  z-index: 2;
+  transform: translateY(-4px);
+}
+
+/* Fixed positioning for card elements */
+.boost-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 30;
+  pointer-events: none;
+  max-width: 80px;
+  text-align: center;
+}
+
+.coin-box {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 25;
+  pointer-events: auto;
+}
+
+/* Card content spacing */
+.professional-card .card-content {
+  padding-top: 2rem; /* Space for coin box */
+  position: relative;
+  z-index: 1;
+}
+
+/* Enhanced hover effects */
+.professional-card:hover .boost-badge {
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Glow effects for boosted cards */
+.professional-card[data-boosted="true"] {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.professional-card[data-boosted="true"]:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+/* Special effects for top performers */
+.professional-card[data-top-performer="true"] {
+  transform: translateY(-2px);
+}
+
+.professional-card[data-rank-tier="champion"] {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 165, 0, 0.3);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.professional-card[data-rank-tier="legend"] {
+  box-shadow: 0 0 25px rgba(192, 192, 192, 0.6), 0 0 50px rgba(169, 169, 169, 0.3);
+  border: 2px solid rgba(192, 192, 192, 0.5);
+}
+
+.professional-card[data-rank-tier="master"] {
+  box-shadow: 0 0 25px rgba(255, 140, 0, 0.6), 0 0 50px rgba(255, 165, 0, 0.3);
+  border: 2px solid rgba(255, 140, 0, 0.5);
+}
+
+.professional-card[data-rank-tier="elite"] {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);
+  border: 2px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Animated borders for top 3 */
+.professional-card[data-rank-tier="champion"]::before,
+.professional-card[data-rank-tier="legend"]::before,
+.professional-card[data-rank-tier="master"]::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: inherit;
+  z-index: -1;
+  animation: border-flow 3s linear infinite;
+}
+
+@keyframes border-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Viral indicator pulse */
+@keyframes viral-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* Fix for mobile overlapping issues */
+@media (max-width: 1024px) {
+  .zentro-directory-layout {
+    flex-direction: column;
+  }
+
+  .zentro-sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .zenny-coin-widget {
+    position: relative;
+    margin-top: 1rem;
+    align-self: center;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .animate-dimension-shift {
+    animation: none; /* Disable complex animations on mobile for performance */
+  }
+
+  .holographic-card::before {
+    animation: none;
+  }
+
+  .zentro-main-content {
+    padding: 1rem;
+  }
+
+  .zenny-coin-widget {
+    position: static;
+    margin: 1rem auto 0;
+    width: fit-content;
+  }
+}

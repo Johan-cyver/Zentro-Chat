@@ -3,7 +3,7 @@ import { FaTrophy, FaGavel, FaClock, FaCoins, FaFire, FaUsers } from 'react-icon
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../contexts/UserContext';
 import spotlightAuctionService from '../../services/spotlightAuctionService';
-import zennyCoinsService from '../../services/zennyCoinsService';
+// import zennyCoinsService from '../../services/zennyCoinsService'; // Temporarily disabled
 
 const SpotlightAuction = ({ isOpen, onClose }) => {
   const { userProfile } = useUser();
@@ -42,8 +42,9 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
 
   const loadUserBalance = async () => {
     if (userProfile?.uid) {
-      const balance = await zennyCoinsService.getUserBalance(userProfile.uid);
-      setUserBalance(balance);
+      // const balance = await zennyCoinsService.getUserBalance(userProfile.uid); // Temporarily disabled
+      // setUserBalance(balance); // Temporarily disabled
+      setUserBalance(0); // Set to 0 temporarily
     }
   };
 
@@ -79,7 +80,7 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
     }
 
     if (amount > userBalance) {
-      alert('Insufficient Zenny coins');
+      alert('Insufficient balance');
       return;
     }
 
@@ -178,7 +179,8 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
             <div className="text-center text-gray-400 py-12">No active auction found</div>
           ) : (
             <div className="space-y-6">
-              {/* User Balance */}
+              {/* User Balance - Temporarily disabled */}
+              {/*
               <div className="bg-gray-800 rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
@@ -189,6 +191,14 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
                   <div className="text-gray-400 text-sm">
                     Next Auction: {new Date(currentAuction.startTime.toDate()).toLocaleString()}
                   </div>
+                </div>
+              </div>
+              */}
+
+              {/* Next Auction Info */}
+              <div className="bg-gray-800 rounded-lg p-4">
+                <div className="text-gray-400 text-sm">
+                  Next Auction: {new Date(currentAuction.startTime.toDate()).toLocaleString()}
                 </div>
               </div>
 
@@ -231,7 +241,7 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-gray-400">Current Bid:</span>
                           <span className="text-yellow-400 font-semibold">
-                            {highestBid > 0 ? `${highestBid} Zenny` : 'No bids'}
+                            {highestBid > 0 ? `${highestBid} Credits` : 'No bids'}
                           </span>
                         </div>
                         
@@ -254,7 +264,7 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
                       {position.winner && (
                         <div className="mt-3 p-2 bg-green-900/30 rounded border border-green-500">
                           <div className="text-green-400 text-xs font-semibold">WINNER</div>
-                          <div className="text-white text-sm">Bid: {position.winner.amount} Zenny</div>
+                          <div className="text-white text-sm">Bid: {position.winner.amount} Credits</div>
                         </div>
                       )}
                     </motion.div>
@@ -278,7 +288,7 @@ const SpotlightAuction = ({ isOpen, onClose }) => {
                   </div>
 
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Bid Amount (Zenny)</label>
+                    <label className="block text-gray-400 text-sm mb-2">Bid Amount (Credits)</label>
                     <input
                       type="number"
                       value={bidAmount}

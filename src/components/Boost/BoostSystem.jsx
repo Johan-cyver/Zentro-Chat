@@ -3,7 +3,7 @@ import { FaRocket, FaCoins, FaStar, FaGem, FaCrown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../contexts/UserContext';
 import spotlightAuctionService from '../../services/spotlightAuctionService';
-import zennyCoinsService from '../../services/zennyCoinsService';
+// import zennyCoinsService from '../../services/zennyCoinsService'; // Temporarily disabled
 
 const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
   const { userProfile } = useUser();
@@ -72,8 +72,9 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
 
   const loadUserBalance = async () => {
     if (userProfile?.uid) {
-      const balance = await zennyCoinsService.getUserBalance(userProfile.uid);
-      setUserBalance(balance);
+      // const balance = await zennyCoinsService.getUserBalance(userProfile.uid); // Temporarily disabled
+      // setUserBalance(balance); // Temporarily disabled
+      setUserBalance(0); // Set to 0 temporarily
     }
   };
 
@@ -141,7 +142,8 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
         </div>
 
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          {/* User Balance */}
+          {/* User Balance - Temporarily disabled */}
+          {/*
           <div className="bg-gray-800 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
@@ -149,6 +151,8 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
                 <span className="text-white font-semibold">Your Balance:</span>
                 <span className="text-yellow-400 font-bold">{userBalance.toLocaleString()} Zenny</span>
               </div>
+          */}
+              {/*
               {currentBoost && (
                 <div className="text-green-400 text-sm">
                   Current Boost: <span className="font-semibold capitalize">{currentBoost.level}</span>
@@ -156,6 +160,7 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
               )}
             </div>
           </div>
+              */}
 
           {/* Boost Levels */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -194,7 +199,7 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
                       </div>
                       <div className="text-right">
                         <div className="text-lg font-bold">{boost.cost}</div>
-                        <div className="text-xs opacity-90">Zenny</div>
+                        <div className="text-xs opacity-90">Credits</div>
                       </div>
                     </div>
                   </div>
@@ -246,12 +251,12 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-white">Apply {selectedBoost.name}</h3>
-                  <p className="text-gray-400">Cost: {selectedBoost.cost} Zenny Coins</p>
+                  <p className="text-gray-400">Cost: {selectedBoost.cost} Credits</p>
                 </div>
                 <div className="text-right">
                   <div className="text-gray-400 text-sm">After purchase:</div>
                   <div className="text-yellow-400 font-bold">
-                    {(userBalance - selectedBoost.cost).toLocaleString()} Zenny
+                    {(userBalance - selectedBoost.cost).toLocaleString()} Credits
                   </div>
                 </div>
               </div>
@@ -268,7 +273,7 @@ const BoostSystem = ({ appId, currentBoost, onBoostApplied, onClose }) => {
                   disabled={loading || !canAfford(selectedBoost.cost)}
                   className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white p-3 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Applying...' : `Apply Boost (${selectedBoost.cost} Zenny)`}
+                  {loading ? 'Applying...' : `Apply Boost (${selectedBoost.cost} Credits)`}
                 </button>
               </div>
 

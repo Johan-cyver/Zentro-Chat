@@ -162,6 +162,38 @@ export default function SignUpPage() {
     }
   };
 
+  // Handle GitHub signup
+  const handleGithubSignUp = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // For now, show a message that GitHub signup is coming soon
+      setError('GitHub signup is coming soon! Please use Google or email/password for now.');
+    } catch (error) {
+      console.error('GitHub signup error:', error);
+      setError('GitHub signup failed. Please try another method.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle Facebook signup
+  const handleFacebookSignUp = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // For now, show a message that Facebook signup is coming soon
+      setError('Facebook signup is coming soon! Please use Google or email/password for now.');
+    } catch (error) {
+      console.error('Facebook signup error:', error);
+      setError('Facebook signup failed. Please try another method.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Calculate age from birth date
   const calculateAge = (birthDate) => {
     const today = new Date();
@@ -613,7 +645,9 @@ export default function SignUpPage() {
                     <div className="grid grid-cols-2 gap-3">
                       <motion.button
                         type="button"
-                        className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
+                        onClick={handleGithubSignUp}
+                        disabled={loading}
+                        className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -622,7 +656,9 @@ export default function SignUpPage() {
                       </motion.button>
                       <motion.button
                         type="button"
-                        className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
+                        onClick={handleFacebookSignUp}
+                        disabled={loading}
+                        className="py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >

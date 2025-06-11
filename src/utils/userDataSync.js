@@ -223,13 +223,41 @@ class UserDataSync {
     }
   }
 
+  // Migrate existing users to ensure compatibility
+  migrateUsers() {
+    try {
+      console.log('[UserDataSync] Starting user migration...');
+
+      // Get all existing users from different storage locations
+      const allUsers = this.getAllUsers();
+
+      if (allUsers.length === 0) {
+        console.log('[UserDataSync] No users found to migrate');
+        return;
+      }
+
+      // Re-sync all users to ensure consistency
+      let migratedCount = 0;
+      allUsers.forEach(user => {
+        if (user.uid) {
+          this.syncUser(user);
+          migratedCount++;
+        }
+      });
+
+      console.log(`[UserDataSync] Successfully migrated ${migratedCount} users`);
+    } catch (error) {
+      console.error('[UserDataSync] Error during user migration:', error);
+    }
+  }
+
   // Debug function to show current state
   debugUserData() {
     console.log('🔍 User Data Debug:');
     console.log('All Users:', JSON.parse(localStorage.getItem(this.KEYS.ALL_USERS) || '[]'));
     console.log('Registered Users:', JSON.parse(localStorage.getItem(this.KEYS.REGISTERED_USERS) || '[]'));
-    
-    const profileKeys = Object.keys(localStorage).filter(key => 
+
+    const profileKeys = Object.keys(localStorage).filter(key =>
       key.startsWith(this.KEYS.PROFILE_PREFIX)
     );
     console.log('Individual Profiles:', profileKeys.map(key => {

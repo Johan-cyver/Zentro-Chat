@@ -1,0 +1,263 @@
+/* ZentroVerse Nexus - Premium Professional Cards */
+
+/* Holographic Background Animation */
+@keyframes holographic-bg {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Legendary Card Glow */
+@keyframes legendary-glow {
+  0% { 
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 165, 0, 0.4),
+      0 0 60px rgba(255, 69, 0, 0.3),
+      inset 0 0 20px rgba(255, 215, 0, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 0 60px rgba(255, 165, 0, 0.6),
+      0 0 90px rgba(255, 69, 0, 0.4),
+      inset 0 0 30px rgba(255, 215, 0, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 165, 0, 0.4),
+      0 0 60px rgba(255, 69, 0, 0.3),
+      inset 0 0 20px rgba(255, 215, 0, 0.1);
+  }
+}
+
+/* Epic Card Glow */
+@keyframes epic-glow {
+  0% { 
+    box-shadow: 
+      0 0 15px rgba(168, 85, 247, 0.5),
+      0 0 30px rgba(147, 51, 234, 0.3),
+      0 0 45px rgba(126, 34, 206, 0.2),
+      inset 0 0 15px rgba(168, 85, 247, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 25px rgba(168, 85, 247, 0.7),
+      0 0 50px rgba(147, 51, 234, 0.5),
+      0 0 75px rgba(126, 34, 206, 0.3),
+      inset 0 0 25px rgba(168, 85, 247, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      0 0 15px rgba(168, 85, 247, 0.5),
+      0 0 30px rgba(147, 51, 234, 0.3),
+      0 0 45px rgba(126, 34, 206, 0.2),
+      inset 0 0 15px rgba(168, 85, 247, 0.1);
+  }
+}
+
+/* Rare Card Glow */
+@keyframes rare-glow {
+  0% { 
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.4),
+      0 0 20px rgba(14, 165, 233, 0.3),
+      0 0 30px rgba(59, 130, 246, 0.2),
+      inset 0 0 10px rgba(6, 182, 212, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 20px rgba(6, 182, 212, 0.6),
+      0 0 40px rgba(14, 165, 233, 0.4),
+      0 0 60px rgba(59, 130, 246, 0.3),
+      inset 0 0 20px rgba(6, 182, 212, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.4),
+      0 0 20px rgba(14, 165, 233, 0.3),
+      0 0 30px rgba(59, 130, 246, 0.2),
+      inset 0 0 10px rgba(6, 182, 212, 0.1);
+  }
+}
+
+/* Common Card Glow */
+@keyframes common-glow {
+  0% { 
+    box-shadow: 
+      0 0 5px rgba(107, 114, 128, 0.3),
+      0 0 10px rgba(75, 85, 99, 0.2),
+      inset 0 0 5px rgba(107, 114, 128, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(107, 114, 128, 0.4),
+      0 0 30px rgba(75, 85, 99, 0.3),
+      inset 0 0 15px rgba(107, 114, 128, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      0 0 5px rgba(107, 114, 128, 0.3),
+      0 0 10px rgba(75, 85, 99, 0.2),
+      inset 0 0 5px rgba(107, 114, 128, 0.1);
+  }
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  10% { transform: translate(-2px, 2px); }
+  20% { transform: translate(-2px, -2px); }
+  30% { transform: translate(2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  70% { transform: translate(2px, 2px); }
+  80% { transform: translate(-2px, -2px); }
+  90% { transform: translate(2px, 2px); }
+  100% { transform: translate(0); }
+}
+
+/* Holographic Sweep */
+@keyframes holographic-sweep {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(400%) skewX(-15deg); }
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Pulse Glow */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Rotating Border */
+@keyframes rotate-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Particle Float */
+@keyframes particle-float {
+  0% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ZentroVerse Card Classes */
+.zentro-card-legendary {
+  animation: legendary-glow 2s ease-in-out infinite alternate;
+}
+
+.zentro-card-epic {
+  animation: epic-glow 2.5s ease-in-out infinite alternate;
+}
+
+.zentro-card-rare {
+  animation: rare-glow 3s ease-in-out infinite alternate;
+}
+
+.zentro-card-common {
+  animation: common-glow 4s ease-in-out infinite alternate;
+}
+
+/* Holographic Effects */
+.holographic-overlay {
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: holographic-sweep 3s ease-in-out infinite;
+}
+
+/* ZentroVerse Gaming UI Elements */
+.zentro-gaming-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.zentro-gaming-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.zentro-gaming-button:hover::before {
+  left: 100%;
+}
+
+/* ZentroVerse Neon Text */
+.zentro-neon-text {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px currentColor;
+}
+
+/* Scrollbar Hide */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ZentroVerse Responsive Design */
+@media (max-width: 768px) {
+  .zentro-card-legendary,
+  .zentro-card-epic,
+  .zentro-card-rare,
+  .zentro-card-common {
+    animation-duration: 3s;
+  }
+}
+
+/* ZentroVerse High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+  .zentro-card-legendary,
+  .zentro-card-epic,
+  .zentro-card-rare,
+  .zentro-card-common {
+    animation: none;
+  }
+  
+  .holographic-overlay {
+    animation: none;
+  }
+  
+  .zentro-gaming-button::before {
+    display: none;
+  }
+}

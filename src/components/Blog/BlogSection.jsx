@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaGlobe, FaLock, FaUser, FaCalendarAlt, FaHeart, FaRegHeart, FaComment, FaTrash, FaArrowLeft } from 'react-icons/fa';
+import {
+  FaEdit, FaGlobe, FaLock, FaUser, FaCalendarAlt, FaHeart, FaRegHeart,
+  FaComment, FaTrash, FaArrowLeft, FaRocket, FaBolt, FaFire, FaStar,
+  FaEye, FaShare, FaBookmark, FaLightbulb, FaBrain, FaAtom, FaPalette
+} from 'react-icons/fa';
 import BlogEditor from './BlogEditor';
 import { useUser } from '../../contexts/UserContext';
+import { useTheme } from '../../contexts/ThemeContext';
+import { getTheme } from '../../styles/themes';
 
 const BlogSection = () => {
   const [showEditor, setShowEditor] = useState(false);
@@ -14,6 +21,7 @@ const BlogSection = () => {
   const [replyingTo, setReplyingTo] = useState(null);
   const [showComments, setShowComments] = useState({});
   const { userProfile } = useUser();
+  const { currentTheme, changeTheme } = useTheme();
   const navigate = useNavigate();
 
   // Load blog posts from localStorage
@@ -290,24 +298,40 @@ const BlogSection = () => {
     const isLiked = post.likes.includes(userProfile.uid);
 
     return (
-      <div key={post.id} className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-purple-500/30 transition-all duration-300 shadow-lg">
+      <motion.div
+        key={post.id}
+        whileHover={{ scale: 1.01, y: -2 }}
+        className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl overflow-hidden border border-purple-500/20 hover:border-purple-500/40 transition-all duration-500 shadow-2xl hover:shadow-purple-500/10"
+      >
         {/* Post Header */}
-        <div className="p-4 border-b border-gray-700 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
-              {post.authorPhotoURL ? (
-                <img
-                  src={post.authorPhotoURL}
-                  alt={post.authorName}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                <FaUser className="text-gray-400" />
-              )}
-            </div>
+        <div className="p-6 border-b border-gray-700/30 flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="relative"
+            >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-0.5">
+                <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center">
+                  {post.authorPhotoURL ? (
+                    <img
+                      src={post.authorPhotoURL}
+                      alt={post.authorName}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <FaUser className="text-gray-400" />
+                  )}
+                </div>
+              </div>
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-800"
+              />
+            </motion.div>
             <div>
-              <h3 className="font-medium text-white">{post.authorName}</h3>
-              <div className="flex items-center gap-2 text-xs text-gray-400">
+              <h3 className="font-bold text-white text-lg">{post.authorName}</h3>
+              <div className="flex items-center gap-3 text-sm text-gray-400">
                 <span className="flex items-center gap-1">
                   <FaCalendarAlt className="h-3 w-3" />
                   {formatDate(post.createdAt)}
@@ -318,8 +342,15 @@ const BlogSection = () => {
                   ) : (
                     <FaLock className="h-3 w-3 text-yellow-400" />
                   )}
-                  {post.visibility === 'public' ? 'Public' : 'Private'}
+                  {post.visibility === 'public' ? 'Global' : 'Vault'}
                 </span>
+                <motion.span
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="px-2 py-1 bg-purple-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30"
+                >
+                  Innovation
+                </motion.span>
               </div>
             </div>
           </div>
@@ -327,60 +358,105 @@ const BlogSection = () => {
           {/* Post Actions - Only show for post owner */}
           {post.authorId === userProfile.uid && (
             <div className="flex items-center gap-2">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => deletePost(post.id)}
-                className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-all duration-200"
+                className="p-3 text-gray-400 hover:text-red-400 hover:bg-red-900/20 rounded-xl transition-all duration-200"
                 title="Delete post"
               >
                 <FaTrash className="h-4 w-4" />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
 
         {/* Post Content */}
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-white mb-2">{post.title}</h2>
-          <div className="text-gray-300 mb-4 whitespace-pre-wrap">
+        <div className="p-6">
+          <motion.h2
+            className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+          >
+            {post.title}
+          </motion.h2>
+
+          <div className="text-gray-300 mb-6 whitespace-pre-wrap leading-relaxed text-lg">
             {isExpanded ? post.content : post.content.length > 300 ? `${post.content.substring(0, 300)}...` : post.content}
           </div>
 
           {post.content.length > 300 && (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setExpandedPost(isExpanded ? null : post.id)}
-              className="text-purple-400 hover:text-purple-300 text-sm mb-4"
+              className="text-purple-400 hover:text-purple-300 text-sm mb-6 px-4 py-2 bg-purple-500/10 rounded-xl border border-purple-500/20 hover:border-purple-500/40 transition-all"
             >
-              {isExpanded ? 'Show Less' : 'Read More'}
-            </button>
+              {isExpanded ? 'Collapse' : 'Expand Idea'}
+            </motion.button>
           )}
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-3 mb-6">
               {post.tags.map((tag, index) => (
-                <span key={index} className="px-2 py-1 bg-gray-700 text-xs text-gray-300 rounded-full">
-                  {tag}
-                </span>
+                <motion.span
+                  key={index}
+                  whileHover={{ scale: 1.1 }}
+                  className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-sm text-purple-300 rounded-full border border-purple-500/30 hover:border-purple-500/50 transition-all"
+                >
+                  #{tag}
+                </motion.span>
               ))}
             </div>
           )}
 
           {/* Post Actions */}
-          <div className="flex items-center gap-4 text-gray-400">
-            <button
-              onClick={() => toggleLike(post.id)}
-              className="flex items-center gap-1 hover:text-purple-400 transition-colors"
-            >
-              {isLiked ? <FaHeart className="text-pink-500" /> : <FaRegHeart />}
-              <span>{post.likes.length}</span>
-            </button>
-            <button
-              onClick={() => toggleComments(post.id)}
-              className="flex items-center gap-1 hover:text-blue-400 transition-colors"
-            >
-              <FaComment />
-              <span>{post.comments ? post.comments.length : 0}</span>
-            </button>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => toggleLike(post.id)}
+                className="flex items-center gap-2 hover:text-pink-400 transition-all duration-300 group"
+              >
+                <motion.div
+                  animate={isLiked ? { scale: [1, 1.3, 1] } : {}}
+                  transition={{ duration: 0.3 }}
+                >
+                  {isLiked ? <FaHeart className="text-pink-500 text-lg" /> : <FaRegHeart className="text-gray-400 text-lg group-hover:text-pink-400" />}
+                </motion.div>
+                <span className="font-medium">{post.likes.length}</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => toggleComments(post.id)}
+                className="flex items-center gap-2 hover:text-blue-400 transition-all duration-300 group"
+              >
+                <FaComment className="text-gray-400 text-lg group-hover:text-blue-400" />
+                <span className="font-medium">{post.comments ? post.comments.length : 0}</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                className="flex items-center gap-2 hover:text-green-400 transition-all duration-300 group"
+              >
+                <FaShare className="text-gray-400 text-lg group-hover:text-green-400" />
+                <span className="font-medium">Share</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                className="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 group"
+              >
+                <FaBookmark className="text-gray-400 text-lg group-hover:text-yellow-400" />
+              </motion.button>
+            </div>
+
+            <div className="flex items-center gap-2 text-gray-500">
+              <FaEye className="text-sm" />
+              <span className="text-sm">{Math.floor(Math.random() * 500) + 50}</span>
+            </div>
           </div>
 
           {/* Comments Section */}
@@ -500,143 +576,384 @@ const BlogSection = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <div className="h-full bg-black text-white p-6 flex flex-col">
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-            Zentro Network
-          </h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/10 to-gray-900 text-white relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            rotate: 360,
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            rotate: -360,
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl"
+        />
+      </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowEditor(!showEditor)}
-              className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center gap-2"
+      <div className="max-w-7xl mx-auto p-6 relative z-10">
+        {/* Revolutionary Header */}
+        <motion.div
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-12 text-center"
+        >
+          <motion.div
+            animate={{
+              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="text-6xl font-black bg-gradient-to-r from-purple-400 via-pink-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 bg-[length:200%_100%]"
+          >
+            ZENTRO NETWORK
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-xl text-gray-300 mb-6"
+          >
+            Where Revolutionary Ideas Meet Infinite Possibilities
+          </motion.p>
+
+          {/* Stats Bar */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="flex justify-center gap-8 mb-8"
+          >
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-400">{blogPosts.length}</div>
+              <div className="text-sm text-gray-400">Ideas Shared</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-pink-400">∞</div>
+              <div className="text-sm text-gray-400">Possibilities</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-400">24/7</div>
+              <div className="text-sm text-gray-400">Innovation</div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Navigation Hub */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-12"
+        >
+          <div className="flex gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveView('public')}
+              className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center gap-3 ${
+                activeView === 'public'
+                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-2xl shadow-purple-500/25'
+                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
+              }`}
             >
-              <FaEdit />
-              <span>{showEditor ? 'View Posts' : 'Create Post'}</span>
-            </button>
+              <FaGlobe className="text-lg" />
+              Global Feed
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 bg-green-400 rounded-full"
+              />
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveView('private')}
+              className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center gap-3 ${
+                activeView === 'private'
+                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-2xl shadow-purple-500/25'
+                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
+              }`}
+            >
+              <FaLock className="text-lg" />
+              My Vault
+            </motion.button>
+
+            {/* Theme Switcher */}
+            <div className="flex items-center gap-2">
+              <FaPalette className="text-gray-400" />
+              <select
+                value={currentTheme?.id || 'corporate'}
+                onChange={(e) => {
+                  const selectedTheme = getTheme(e.target.value);
+                  if (selectedTheme && changeTheme) {
+                    changeTheme(selectedTheme);
+                  }
+                }}
+                className="bg-gray-800/50 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="corporate">Corporate</option>
+                <option value="neonPurple">Neon Purple</option>
+                <option value="cyberpunk">Cyberpunk</option>
+                <option value="matrix">Matrix</option>
+                <option value="clean">Clean</option>
+                <option value="minimal">Minimal</option>
+                <option value="warm">Warm</option>
+                <option value="darkBlue">Dark Blue</option>
+                <option value="neonGreen">Neon Green</option>
+                <option value="neonRed">Neon Red</option>
+                <option value="ocean">Ocean</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        {showEditor ? (
-          <div className="bg-gray-900 border border-purple-500/30 rounded-xl p-6 shadow-lg">
-            <BlogEditor onPostCreated={handlePostCreated} />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 flex-1">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="bg-gray-900 border border-purple-500/30 rounded-xl p-6 shadow-lg sticky top-6">
-                <h2 className="text-xl font-bold text-white mb-6">Blog Views</h2>
+          <motion.button
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowEditor(true)}
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 flex items-center gap-3 group"
+          >
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              <FaRocket className="text-xl" />
+            </motion.div>
+            Launch Idea
+            <FaBolt className="text-lg group-hover:text-yellow-300 transition-colors" />
+          </motion.button>
+        </motion.div>
 
-                <div className="space-y-3">
-                  <button
-                    onClick={() => setActiveView('public')}
-                    className={`w-full flex items-center gap-2 p-3 rounded-lg transition-colors ${
-                      activeView === 'public'
-                        ? 'bg-purple-900/50 border border-purple-500 text-white'
-                        : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
-                    }`}
+        {/* Editor Modal */}
+        <AnimatePresence>
+          {showEditor && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-purple-500/30 shadow-2xl"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Launch Your Idea
+                  </h2>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setShowEditor(false)}
+                    className="p-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors"
                   >
-                    <FaGlobe className={activeView === 'public' ? 'text-green-400' : 'text-gray-400'} />
-                    <span>Public Feed</span>
-                  </button>
+                    <FaArrowLeft className="text-white" />
+                  </motion.button>
+                </div>
+                <BlogEditor onPostCreated={handlePostCreated} />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-                  <button
-                    onClick={() => setActiveView('private')}
-                    className={`w-full flex items-center gap-2 p-3 rounded-lg transition-colors ${
-                      activeView === 'private'
-                        ? 'bg-purple-900/50 border border-purple-500 text-white'
-                        : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
-                    }`}
-                  >
-                    <FaLock className={activeView === 'private' ? 'text-yellow-400' : 'text-gray-400'} />
-                    <span>My Posts</span>
-                  </button>
+        {/* Content Area */}
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="grid grid-cols-1 xl:grid-cols-4 gap-8"
+        >
+          {/* Innovation Sidebar */}
+          <div className="xl:col-span-1">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border border-purple-500/20 shadow-2xl sticky top-6"
+            >
+              <div className="text-center mb-6">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center"
+                >
+                  <FaBrain className="text-2xl text-white" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-2">Innovation Hub</h3>
+                <p className="text-gray-400 text-sm">Transform thoughts into reality</p>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="space-y-3 mb-6">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowEditor(true)}
+                  className="w-full p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white font-bold flex items-center gap-3 hover:shadow-lg transition-all"
+                >
+                  <FaLightbulb className="text-lg" />
+                  Spark Idea
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="w-full p-3 bg-gray-700/50 rounded-xl text-gray-300 font-medium flex items-center gap-3 hover:bg-gray-600/50 transition-all"
+                >
+                  <FaAtom className="text-lg text-blue-400" />
+                  Research Mode
+                </motion.button>
+              </div>
+
+              {/* Network Stats */}
+              <div className="space-y-4">
+                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-4 border border-purple-500/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-300">Active Minds</span>
+                    <motion.span
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="text-purple-400 font-bold"
+                    >
+                      {Math.floor(Math.random() * 1000) + 500}
+                    </motion.span>
+                  </div>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-gray-700">
-                  <h3 className="text-lg font-semibold text-white mb-4">About Blog</h3>
-                  <p className="text-gray-300 text-sm">
-                    Share your thoughts, ideas, and experiences with the Zentro community.
-                    Create public posts for everyone to see or private posts just for yourself.
-                  </p>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                      <span className="text-gray-300 text-sm">Public posts are visible to everyone</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                      <span className="text-gray-300 text-sm">Private posts are only visible to you</span>
-                    </div>
+                <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl p-4 border border-blue-500/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-300">Ideas Today</span>
+                    <span className="text-blue-400 font-bold">{blogPosts.length}</span>
                   </div>
-
-                  <div className="mt-6">
-                    <button
-                      onClick={() => setShowEditor(true)}
-                      className="w-full py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
-                    >
-                      <span>Create New Post</span>
-                    </button>
-                    <p className="text-gray-400 text-xs mt-2 text-center">
-                      Use our integrated research engine to find information without leaving the app!
-                    </p>
-                  </div>
-
-
                 </div>
               </div>
-            </div>
+            </motion.div>
+          </div>
 
-            {/* Main Content */}
-            <div className="lg:col-span-3">
-              <div className="bg-gray-900 border border-purple-500/30 rounded-xl p-6 shadow-lg">
-                <h2 className="text-2xl font-bold text-white mb-6">
-                  {activeView === 'public' ? 'Public Blog Feed' : 'My Blog Posts'}
-                </h2>
+          {/* Main Feed */}
+          <div className="xl:col-span-3">
+            <motion.div
+              className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-xl rounded-3xl border border-purple-500/20 shadow-2xl overflow-hidden"
+            >
+              {/* Feed Header */}
+              <div className="p-6 border-b border-gray-700/50">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    >
+                      {activeView === 'public' ? <FaGlobe className="text-green-400" /> : <FaLock className="text-yellow-400" />}
+                    </motion.div>
+                    {activeView === 'public' ? 'Global Innovation Feed' : 'Personal Vault'}
+                  </h2>
 
+                  <div className="flex items-center gap-2">
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-3 h-3 bg-green-400 rounded-full"
+                    />
+                    <span className="text-green-400 text-sm font-medium">Live</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feed Content */}
+              <div className="p-6">
                 {loading ? (
-                  <div className="flex justify-center items-center h-40">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+                  <div className="flex flex-col items-center justify-center h-64">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full mb-4"
+                    />
+                    <p className="text-gray-400">Loading revolutionary ideas...</p>
                   </div>
                 ) : blogPosts.length === 0 ? (
-                  <div className="bg-gray-800 rounded-xl p-8 text-center flex flex-col justify-center items-center h-full">
-                    <FaGlobe className="text-5xl text-gray-500 mb-4" />
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {activeView === 'public'
-                        ? 'No Public Posts Yet'
-                        : 'No Personal Posts Yet'}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="text-center py-16"
+                  >
+                    <motion.div
+                      animate={{
+                        y: [0, -10, 0],
+                        rotate: [0, 5, -5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center"
+                    >
+                      <FaRocket className="text-3xl text-white" />
+                    </motion.div>
+                    <h3 className="text-3xl font-bold text-white mb-4">
+                      {activeView === 'public' ? 'The Future Awaits' : 'Your Innovation Journey Begins'}
                     </h3>
-                    <p className="text-gray-400 mb-6">
+                    <p className="text-gray-400 text-lg mb-8 max-w-md mx-auto">
                       {activeView === 'public'
-                        ? 'Be the first to share something with the Zentro Network!'
-                        : 'Looks like you haven\'t created any posts. Why not start now?'}
+                        ? 'Be the pioneer who launches the first revolutionary idea into the Zentro Network!'
+                        : 'Transform your thoughts into digital reality. Every great innovation starts with a single idea.'
+                      }
                     </p>
-                    {activeView === 'private' && (
-                      <button
-                        onClick={() => setShowEditor(true)}
-                        className="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
-                      >
-                        Create Your First Post
-                      </button>
-                    )}
-                  </div>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setShowEditor(true)}
+                      className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 flex items-center gap-3 mx-auto"
+                    >
+                      <FaFire className="text-xl" />
+                      Ignite Innovation
+                      <FaStar className="text-xl" />
+                    </motion.button>
+                  </motion.div>
                 ) : (
                   <div className="space-y-6">
-                    {blogPosts.map(post => renderBlogPost(post))}
+                    <AnimatePresence>
+                      {blogPosts.map((post, index) => (
+                        <motion.div
+                          key={post.id}
+                          initial={{ opacity: 0, y: 50 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -50 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          {renderBlogPost(post)}
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
-        )}
+        </motion.div>
       </div>
     </div>
   );
